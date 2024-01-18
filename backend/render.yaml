@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: bitespeed-identity
+    env: node
+    buildCommand: npm install && npm run build && npm run migrate
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bitespeed-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production
+
+databases:
+  - name: bitespeed-db
+    plan: free
