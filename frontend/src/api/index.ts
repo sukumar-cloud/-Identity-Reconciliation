@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { IdentifyRequest, IdentifyResponse, Contact } from '../types';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = (import.meta as any).env.VITE_API_URL || 'http://localhost:3000';
 
 const client = axios.create({ baseURL: BASE_URL });
 
