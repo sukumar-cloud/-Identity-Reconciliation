@@ -1,4 +1,27 @@
+import { useEffect, useState } from 'react';
+import { getDashboardStats, DashboardStats } from '../api';
+
 export default function SettingsPage() {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await getDashboardStats();
+        setStats(data);
+      } catch (error) {
+        console.error('Failed to fetch stats:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+    const interval = setInterval(fetchStats, 5000); // Update every 5s
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="p-12 animate-fade-in max-w-5xl mx-auto">
       <div className="mb-12 border-b border-white/10 pb-8">
@@ -20,6 +43,35 @@ export default function SettingsPage() {
             <div className="text-right">
               <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest">Version</p>
               <p className="text-[9px] font-mono text-white/40 uppercase tracking-[0.2em] mt-1">v1.0.0</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Performance Metrics */}
+        <div className="border border-white/10 p-12">
+          <h2 className="font-display font-bold text-xs text-white/40 uppercase tracking-[0.3em] mb-8">System Metrics</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <p className="font-display font-bold text-3xl text-white tracking-tighter">
+                {loading ? '...' : stats?.totalContacts || 0}
+              </p>
+              <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-2">Total Records</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display font-bold text-3xl text-white tracking-tighter">
+                {loading ? '...' : stats?.linkedClusters || 0}
+              </p>
+              <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-2">Primary Nodes</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display font-bold text-3xl text-white tracking-tighter">
+                {loading ? '...' : stats?.recentActivity.length || 0}
+              </p>
+              <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-2">Recent Activity</p>
+            </div>
+            <div className="text-center">
+              <p className="font-display font-bold text-3xl text-white tracking-tighter">100%</p>
+              <p className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-2">Uptime</p>
             </div>
           </div>
         </div>
