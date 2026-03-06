@@ -5,6 +5,22 @@ const BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 const client = axios.create({ baseURL: BASE_URL });
 
+export interface DashboardStats {
+  totalContacts: number;
+  linkedClusters: number;
+  recentActivity: {
+    email: string | null;
+    phone: string | null;
+    action: string;
+    createdAt: string;
+  }[];
+}
+
+export const getDashboardStats = async (): Promise<DashboardStats> => {
+  const { data } = await client.get<DashboardStats>('/dashboard/stats');
+  return data;
+};
+
 export const identifyContact = async (req: IdentifyRequest): Promise<IdentifyResponse> => {
   const { data } = await client.post<IdentifyResponse>('/identify', req);
   return data;

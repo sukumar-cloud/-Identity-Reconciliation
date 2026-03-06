@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Settings, Server, Key, Globe, Save } from 'lucide-react';
+import { Server, Key, Globe, Save } from 'lucide-react';
 
 export default function SettingsPage() {
   const [apiUrl, setApiUrl] = useState(import.meta.env.VITE_API_URL || 'http://localhost:3000');
@@ -12,27 +12,23 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="p-8 animate-fade-in max-w-2xl">
-      <div className="mb-8">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-          <span className="font-mono text-accent text-xs tracking-widest uppercase">Configuration</span>
-        </div>
-        <h1 className="font-display font-bold text-3xl text-ink">Settings</h1>
-        <p className="text-ink-muted text-sm mt-1">Configure your Bitespeed service connection.</p>
+    <div className="p-12 animate-fade-in max-w-5xl mx-auto">
+      <div className="mb-12 border-b border-white/10 pb-8">
+        <h1 className="font-display font-bold text-4xl text-white tracking-tight">Settings</h1>
+        <p className="text-white/40 text-sm mt-2 font-body max-w-xl">Configure your Bitespeed service connection.</p>
       </div>
 
-      <div className="space-y-5">
+      <div className="space-y-12">
         {/* API Config */}
-        <div className="glass-panel rounded-xl overflow-hidden">
-          <div className="flex items-center gap-3 px-6 py-4 border-b border-border">
-            <Server className="w-4 h-4 text-accent" />
-            <h2 className="font-display font-semibold text-ink text-sm">Backend Connection</h2>
+        <div className="border border-white/10">
+          <div className="flex items-center gap-3 px-8 py-6 border-b border-white/10">
+            <Server className="w-4 h-4 text-white/40" />
+            <h2 className="font-display font-semibold text-white text-sm uppercase tracking-widest">Backend Connection</h2>
           </div>
-          <div className="p-6 space-y-4">
+          <div className="p-8 space-y-6">
             <div>
-              <label className="block text-xs font-mono text-ink-muted uppercase tracking-widest mb-2">
-                <Globe className="inline w-3 h-3 mr-1" />API Base URL
+              <label className="block text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-3">
+                API Base URL
               </label>
               <input
                 className="input-field"
@@ -40,56 +36,53 @@ export default function SettingsPage() {
                 onChange={(e) => setApiUrl(e.target.value)}
                 placeholder="https://your-service.onrender.com"
               />
-              <p className="text-ink-muted text-[11px] font-body mt-1.5">The base URL of your deployed Bitespeed backend service.</p>
+              <p className="text-white/20 text-[10px] font-mono mt-3 uppercase tracking-wider">The base URL of your deployed Bitespeed backend service.</p>
             </div>
           </div>
         </div>
 
         {/* Endpoint reference */}
-        <div className="glass-panel rounded-xl overflow-hidden">
-          <div className="flex items-center gap-3 px-6 py-4 border-b border-border">
-            <Key className="w-4 h-4 text-accent" />
-            <h2 className="font-display font-semibold text-ink text-sm">Endpoint Reference</h2>
+        <div className="border border-white/10">
+          <div className="flex items-center gap-3 px-8 py-6 border-b border-white/10">
+            <Key className="w-4 h-4 text-white/40" />
+            <h2 className="font-display font-semibold text-white text-sm uppercase tracking-widest">Endpoint Reference</h2>
           </div>
-          <div className="p-6 space-y-3">
+          <div className="p-8 space-y-4">
             {[
               { method: 'POST', path: '/identify', desc: 'Identify & reconcile a contact' },
               { method: 'GET', path: '/contacts', desc: 'List all contacts' },
               { method: 'GET', path: '/contacts/search', desc: 'Search contacts by email or phone' },
             ].map((e) => (
-              <div key={e.path} className="flex items-center gap-3 p-3 bg-void rounded-lg border border-border">
-                <span className={`font-mono text-[10px] px-2 py-0.5 rounded ${
-                  e.method === 'POST' ? 'bg-accent/10 text-accent border border-accent/20' : 'bg-muted/30 text-ink-muted border border-border'
-                }`}>
+              <div key={e.path} className="flex items-center gap-6 p-4 border border-white/5 hover:bg-white/[0.02] transition-colors">
+                <span className={`font-mono text-[9px] px-2 py-0.5 border ${
+                  e.method === 'POST' ? 'bg-white text-black border-white' : 'border-white/10 text-white/40'
+                } uppercase tracking-widest`}>
                   {e.method}
                 </span>
-                <span className="font-mono text-xs text-ink">{e.path}</span>
-                <span className="font-body text-xs text-ink-muted ml-auto">{e.desc}</span>
+                <span className="font-mono text-xs text-white/60 tracking-tight">{e.path}</span>
+                <span className="font-mono text-[10px] text-white/20 uppercase tracking-widest ml-auto">{e.desc}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Service status */}
-        <div className="glass-panel rounded-xl p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <div>
-                <p className="font-display font-semibold text-ink text-sm">Service Status</p>
-                <p className="font-mono text-[11px] text-accent">Online · PostgreSQL connected</p>
-              </div>
+        <div className="border border-white/10 p-8 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-1.5 h-1.5 bg-white" />
+            <div>
+              <p className="text-xs font-mono text-white uppercase tracking-widest">Service Status</p>
+              <p className="text-[10px] font-mono text-white/20 uppercase tracking-[0.2em] mt-1">Online · PostgreSQL connected</p>
             </div>
-            <span className="tag-primary">v1.0.0</span>
           </div>
+          <span className="text-[10px] font-mono border border-white/10 px-3 py-1 text-white/40 uppercase tracking-widest">v1.0.0</span>
         </div>
 
         <button
           onClick={handleSave}
-          className={`btn-primary flex items-center gap-2 ${saved ? 'bg-green-500' : ''}`}
+          className="btn-primary w-full uppercase tracking-[0.2em] text-xs font-mono py-4"
         >
-          <Save className="w-4 h-4" />
-          {saved ? 'Saved!' : 'Save Settings'}
+          {saved ? 'Settings Saved' : 'Save Configuration'}
         </button>
       </div>
     </div>

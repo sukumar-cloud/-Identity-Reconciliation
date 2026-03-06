@@ -14,49 +14,56 @@ const navItems = [
 
 export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
   return (
-    <aside className="w-60 shrink-0 h-screen sticky top-0 flex flex-col bg-surface border-r border-border">
+    <aside className="w-60 shrink-0 h-screen sticky top-0 flex flex-col bg-black border-r border-white/10">
       {/* Logo */}
-      <div className="px-5 py-6 border-b border-border">
+      <div className="px-8 py-10 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-accent/10 border border-accent/30 flex items-center justify-center animate-pulse-accent">
-            <Eye className="w-4 h-4 text-accent" />
+          <div className="w-8 h-8 bg-white flex items-center justify-center">
+            <Eye className="w-4 h-4 text-black" />
           </div>
           <div>
-            <p className="font-display font-bold text-ink text-sm tracking-wide">BITESPEED</p>
-            <p className="font-mono text-ink-muted text-[10px] tracking-widest uppercase">Identity Engine</p>
+            <p className="font-display font-bold text-white text-sm tracking-tighter">BITESPEED</p>
+            <p className="font-mono text-white/40 text-[9px] tracking-[0.2em] uppercase">Identity</p>
           </div>
         </div>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-4 py-8 space-y-1">
         {navItems.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             onClick={() => onNavigate(id)}
-            className={`nav-link w-full text-left ${activePage === id ? 'active' : ''}`}
+            className={`nav-link w-full text-left flex items-center gap-3 px-4 py-3 transition-all ${
+              activePage === id 
+                ? 'text-white bg-white/5 border-l-2 border-white' 
+                : 'text-white/40 hover:text-white'
+            }`}
           >
             <Icon className="w-4 h-4" />
-            <span>{label}</span>
+            <span className="text-xs font-mono uppercase tracking-widest">{label}</span>
           </button>
         ))}
       </nav>
 
       {/* Bottom */}
-      <div className="px-3 py-4 border-t border-border">
+      <div className="px-4 py-8 border-t border-white/10">
         <button
           onClick={() => onNavigate('settings')}
-          className={`nav-link w-full text-left ${activePage === 'settings' ? 'active' : ''}`}
+          className={`nav-link w-full text-left flex items-center gap-3 px-4 py-3 transition-all ${
+            activePage === 'settings' 
+              ? 'text-white bg-white/5 border-l-2 border-white' 
+              : 'text-white/40 hover:text-white'
+          }`}
         >
           <Settings className="w-4 h-4" />
-          <span>Settings</span>
+          <span className="text-xs font-mono uppercase tracking-widest">Settings</span>
         </button>
-        <div className="mt-4 mx-1 p-3 rounded-lg bg-accent/5 border border-accent/10">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            <span className="font-mono text-[10px] text-accent tracking-widest uppercase">Service Online</span>
+        <div className="mt-8 px-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-1 h-1 bg-white" />
+            <span className="font-mono text-[9px] text-white tracking-[0.2em] uppercase">System Active</span>
           </div>
-          <p className="font-mono text-[10px] text-ink-muted">v1.0.0 · PostgreSQL</p>
         </div>
       </div>
     </aside>

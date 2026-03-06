@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, Users, Mail, Phone, Hash, Link2, Crown, ChevronDown } from 'lucide-react';
+import { Search, Users, Hash, Mail, Phone, Crown, ChevronDown } from 'lucide-react';
 
 // Mock data for display — in production this comes from GET /contacts
 const mockContacts = [
@@ -32,148 +32,133 @@ export default function Contacts() {
     mockContacts.filter((c) => c.linkedId === primaryId);
 
   return (
-    <div className="p-8 animate-fade-in">
+    <div className="p-12 animate-fade-in max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-          <span className="font-mono text-accent text-xs tracking-widest uppercase">Database</span>
-        </div>
-        <h1 className="font-display font-bold text-3xl text-ink">Contact Registry</h1>
-        <p className="text-ink-muted text-sm mt-1">View and search all tracked identities.</p>
+      <div className="mb-12 border-b border-white/10 pb-8">
+        <h1 className="font-display font-bold text-4xl text-white tracking-tight">Contact Registry</h1>
+        <p className="text-white/40 text-sm mt-2 font-body max-w-xl">View and search all tracked identities.</p>
       </div>
 
       {/* Controls */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-muted" />
+      <div className="flex flex-col md:flex-row md:items-center gap-6 mb-12">
+        <div className="relative flex-1">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
           <input
-            className="input-field pl-10"
-            placeholder="Search email, phone, or ID..."
+            className="input-field pl-12"
+            placeholder="SEARCH BY EMAIL, PHONE, OR ID..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div className="flex items-center gap-1 p-1 bg-surface border border-border rounded-lg">
-          <Filter className="w-3.5 h-3.5 text-ink-muted ml-2" />
+        <div className="flex border border-white/10">
           {(['all', 'primary', 'secondary'] as FilterType[]).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-3 py-1.5 rounded text-xs font-mono capitalize transition-all ${
-                filter === f ? 'bg-accent/10 text-accent' : 'text-ink-muted hover:text-ink'
+              className={`px-6 py-3 text-[10px] font-mono uppercase tracking-widest transition-all ${
+                filter === f ? 'bg-white text-black' : 'text-white/40 hover:text-white'
               }`}
             >
               {f}
             </button>
           ))}
         </div>
-        <div className="ml-auto flex items-center gap-2 text-ink-muted text-xs font-mono">
+        <div className="flex items-center gap-3 text-white/20 text-[10px] font-mono uppercase tracking-widest">
           <Users className="w-3.5 h-3.5" />
-          {filtered.length} contact{filtered.length !== 1 ? 's' : ''}
+          {filtered.length} RECORDS
         </div>
       </div>
 
       {/* Table */}
-      <div className="glass-panel rounded-xl overflow-hidden">
-        <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-border bg-panel text-[10px] font-mono text-ink-muted uppercase tracking-widest">
+      <div className="border border-white/10">
+        <div className="grid grid-cols-12 gap-4 px-8 py-4 border-b border-white/10 bg-white/[0.02] text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">
           <div className="col-span-1">ID</div>
-          <div className="col-span-4">Email</div>
-          <div className="col-span-2">Phone</div>
-          <div className="col-span-2">Precedence</div>
-          <div className="col-span-2">Linked To</div>
-          <div className="col-span-1">Created</div>
+          <div className="col-span-4">Identity Details</div>
+          <div className="col-span-3">Relationship</div>
+          <div className="col-span-2">Linked</div>
+          <div className="col-span-2 text-right">Created</div>
         </div>
 
-        <div className="divide-y divide-border/50">
+        <div className="divide-y divide-white/10">
           {filtered.map((contact) => {
             const linkedContacts = getLinkedContacts(contact.id);
             const isExpanded = expandedId === contact.id;
 
             return (
-              <div key={contact.id}>
+              <div key={contact.id} className="group">
                 <div
-                  className="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-panel/50 transition-colors cursor-pointer items-center"
+                  className="grid grid-cols-12 gap-4 px-8 py-6 hover:bg-white/[0.02] transition-all cursor-pointer items-center"
                   onClick={() => setExpandedId(isExpanded ? null : contact.id)}
                 >
                   <div className="col-span-1">
-                    <span className="font-mono text-xs text-ink-muted flex items-center gap-1">
-                      <Hash className="w-3 h-3" />{contact.id}
-                    </span>
+                    <span className="font-mono text-xs text-white/40">#{contact.id}</span>
                   </div>
-                  <div className="col-span-4">
+                  <div className="col-span-4 space-y-1">
                     <div className="flex items-center gap-2">
-                      <Mail className="w-3 h-3 text-ink-muted shrink-0" />
-                      <span className="font-mono text-xs text-ink truncate">
-                        {contact.email ?? <span className="text-ink-muted">—</span>}
-                      </span>
+                      <Mail className="w-3 h-3 text-white/20" />
+                      <span className="font-mono text-xs text-white">{contact.email ?? '—'}</span>
                     </div>
+                    {contact.phoneNumber && (
+                      <div className="flex items-center gap-2">
+                        <Phone className="w-3 h-3 text-white/20" />
+                        <span className="font-mono text-[10px] text-white/40">+{contact.phoneNumber}</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="col-span-2">
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-3 h-3 text-ink-muted shrink-0" />
-                      <span className="font-mono text-xs text-ink">
-                        {contact.phoneNumber ?? <span className="text-ink-muted">—</span>}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="col-span-2">
+                  <div className="col-span-3">
                     {contact.linkPrecedence === 'primary' ? (
-                      <span className="tag-primary text-[10px]">
-                        <Crown className="w-3 h-3" /> Primary
+                      <span className="text-[10px] font-mono border border-white px-2 py-0.5 bg-white text-black uppercase tracking-wider flex items-center gap-2 w-fit">
+                        <Crown className="w-3 h-3" /> PRIMARY
                       </span>
                     ) : (
-                      <span className="tag-secondary text-[10px]">Secondary</span>
+                      <span className="text-[10px] font-mono border border-white/10 px-2 py-0.5 text-white/40 uppercase tracking-wider w-fit block">
+                        SECONDARY
+                      </span>
                     )}
                   </div>
                   <div className="col-span-2">
                     {contact.linkedId ? (
-                      <span className="flex items-center gap-1 font-mono text-xs text-ink-muted">
-                        <Link2 className="w-3 h-3" />#{contact.linkedId}
-                      </span>
+                      <span className="font-mono text-xs text-white/40 uppercase tracking-widest">→ #{contact.linkedId}</span>
                     ) : (
-                      <span className="text-ink-muted text-xs font-mono">Root</span>
+                      <span className="font-mono text-[10px] text-white/20 uppercase tracking-[0.2em]">ORIGIN</span>
                     )}
                   </div>
-                  <div className="col-span-1 flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-ink-muted">
+                  <div className="col-span-2 text-right flex items-center justify-end gap-4">
+                    <span className="font-mono text-[10px] text-white/20 uppercase">
                       {new Date(contact.createdAt).toLocaleDateString()}
                     </span>
                     {linkedContacts.length > 0 && (
-                      <ChevronDown className={`w-3.5 h-3.5 text-accent transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                      <ChevronDown className={`w-3.5 h-3.5 text-white/40 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-white' : ''}`} />
                     )}
                   </div>
                 </div>
 
                 {/* Expanded secondaries */}
                 {isExpanded && linkedContacts.length > 0 && (
-                  <div className="bg-accent/3 border-t border-accent/10">
+                  <div className="bg-white/[0.03] border-t border-white/10">
                     {linkedContacts.map((linked) => (
-                      <div key={linked.id} className="grid grid-cols-12 gap-4 px-6 py-3 items-center opacity-75">
+                      <div key={linked.id} className="grid grid-cols-12 gap-4 px-8 py-4 items-center border-b border-white/[0.05] last:border-0">
                         <div className="col-span-1">
-                          <span className="font-mono text-xs text-ink-muted flex items-center gap-1 pl-3 border-l-2 border-accent/30">
-                            <Hash className="w-3 h-3" />{linked.id}
-                          </span>
+                          <span className="font-mono text-xs text-white/20 pl-4 border-l border-white/20">#{linked.id}</span>
                         </div>
-                        <div className="col-span-4">
+                        <div className="col-span-4 space-y-1 opacity-60">
                           <div className="flex items-center gap-2">
-                            <Mail className="w-3 h-3 text-ink-muted shrink-0" />
-                            <span className="font-mono text-xs text-ink-muted truncate">{linked.email ?? '—'}</span>
+                            <span className="font-mono text-xs text-white">{linked.email ?? '—'}</span>
                           </div>
+                          {linked.phoneNumber && (
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono text-[10px] text-white/40">+{linked.phoneNumber}</span>
+                            </div>
+                          )}
                         </div>
-                        <div className="col-span-2">
-                          <span className="font-mono text-xs text-ink-muted">{linked.phoneNumber ?? '—'}</span>
+                        <div className="col-span-3">
+                          <span className="text-[9px] font-mono text-white/20 uppercase tracking-widest pl-2">SUB-RECORD</span>
                         </div>
-                        <div className="col-span-2">
-                          <span className="tag-secondary text-[10px]">Secondary</span>
+                        <div className="col-span-2 opacity-40">
+                          <span className="font-mono text-xs">→ #{linked.linkedId}</span>
                         </div>
-                        <div className="col-span-2">
-                          <span className="flex items-center gap-1 font-mono text-xs text-ink-muted">
-                            <Link2 className="w-3 h-3 text-accent/50" />#{linked.linkedId}
-                          </span>
-                        </div>
-                        <div className="col-span-1">
-                          <span className="font-mono text-[10px] text-ink-muted">
+                        <div className="col-span-2 text-right">
+                          <span className="font-mono text-[10px] text-white/10 uppercase">
                             {new Date(linked.createdAt).toLocaleDateString()}
                           </span>
                         </div>
@@ -186,9 +171,8 @@ export default function Contacts() {
           })}
 
           {filtered.length === 0 && (
-            <div className="px-6 py-16 text-center">
-              <p className="font-display text-ink-muted text-sm">No contacts found</p>
-              <p className="font-body text-ink-muted/60 text-xs mt-1">Try adjusting your search or filter</p>
+            <div className="py-24 text-center">
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/20">No matching records</p>
             </div>
           )}
         </div>

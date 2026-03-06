@@ -42,112 +42,113 @@ export default function IdentifyPage() {
   };
 
   return (
-    <div className="p-8 animate-fade-in max-w-5xl">
+    <div className="p-12 animate-fade-in max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-          <span className="font-mono text-accent text-xs tracking-widest uppercase">Identity Lookup</span>
-        </div>
-        <h1 className="font-display font-bold text-3xl text-ink">Identify Contact</h1>
-        <p className="text-ink-muted text-sm mt-1">Resolve and consolidate customer identity across all touchpoints.</p>
+      <div className="mb-12 border-b border-white/10 pb-8">
+        <h1 className="font-display font-bold text-4xl text-white tracking-tight">Identify Contact</h1>
+        <p className="text-white/40 text-sm mt-2 font-body max-w-xl">Resolve and consolidate customer identity across all touchpoints.</p>
       </div>
 
       {/* Mode toggle */}
-      <div className="flex gap-1 p-1 bg-surface border border-border rounded-lg w-fit mb-8">
+      <div className="flex border border-white/10 w-fit mb-12">
         {(['customer', 'api'] as Mode[]).map((m) => (
           <button
             key={m}
             onClick={() => setMode(m)}
-            className={`px-5 py-2 rounded-md text-sm font-display font-medium transition-all duration-150 ${
-              mode === m ? 'bg-accent text-void' : 'text-ink-muted hover:text-ink'
+            className={`px-8 py-3 text-xs font-mono uppercase tracking-widest transition-all ${
+              mode === m ? 'bg-white text-black' : 'text-white/40 hover:text-white'
             }`}
           >
-            {m === 'customer' ? '👤 Customer Form' : '⚡ API Tester'}
+            {m === 'customer' ? 'Form' : 'API Tester'}
           </button>
         ))}
       </div>
 
-      <div className="grid grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         {/* Form */}
-        <div className="col-span-2 space-y-5">
+        <div className="lg:col-span-5 space-y-8">
           {mode === 'customer' ? (
-            <div className="glass-panel rounded-xl p-6 space-y-5">
-              <div>
-                <label className="block text-xs font-mono text-ink-muted uppercase tracking-widest mb-2">
-                  <Mail className="inline w-3 h-3 mr-1.5" />Email Address
-                </label>
-                <input
-                  className="input-field"
-                  placeholder="doc@hillvalley.edu"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-                />
+            <div className="border border-white/10 p-8 space-y-8">
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-3">
+                    Email Address
+                  </label>
+                  <input
+                    className="input-field"
+                    placeholder="name@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+                  />
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="flex-1 h-px bg-white/5" />
+                  <span className="text-white/20 text-[10px] font-mono">OR</span>
+                  <div className="flex-1 h-px bg-white/5" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-3">
+                    Phone Number
+                  </label>
+                  <input
+                    className="input-field"
+                    placeholder="1234567890"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+                  />
+                </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 h-px bg-border" />
-                <span className="text-ink-muted text-xs font-mono">OR</span>
-                <div className="flex-1 h-px bg-border" />
-              </div>
-              <div>
-                <label className="block text-xs font-mono text-ink-muted uppercase tracking-widest mb-2">
-                  <Phone className="inline w-3 h-3 mr-1.5" />Phone Number
-                </label>
-                <input
-                  className="input-field"
-                  placeholder="1234567890"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-                />
-              </div>
+              
               {error && (
-                <div className="bg-danger/10 border border-danger/20 rounded-lg px-4 py-3 text-danger text-xs font-mono">
-                  {error}
+                <div className="border border-white/10 p-4 text-white/60 text-[10px] font-mono leading-relaxed uppercase tracking-wider">
+                  Error: {error}
                 </div>
               )}
-              <div className="flex gap-3 pt-1">
-                <button onClick={handleSubmit} disabled={loading} className="btn-primary flex-1 flex items-center justify-center gap-2">
+
+              <div className="flex gap-4 pt-4">
+                <button onClick={handleSubmit} disabled={loading} className="btn-primary flex-1 flex items-center justify-center gap-3 uppercase tracking-widest text-xs font-mono">
                   {loading ? (
-                    <span className="w-4 h-4 border-2 border-void/30 border-t-void rounded-full animate-spin" />
+                    <span className="w-3 h-3 border border-black/30 border-t-black rounded-full animate-spin" />
                   ) : (
-                    <Send className="w-4 h-4" />
+                    <Send className="w-3.5 h-3.5" />
                   )}
-                  {loading ? 'Identifying...' : 'Identify'}
+                  {loading ? 'Processing' : 'Identify'}
                 </button>
-                <button onClick={handleReset} className="btn-ghost flex items-center gap-2">
-                  <RotateCcw className="w-4 h-4" />
+                <button onClick={handleReset} className="border border-white/10 px-4 flex items-center justify-center hover:border-white transition-colors">
+                  <RotateCcw className="w-3.5 h-3.5 text-white/40" />
                 </button>
               </div>
             </div>
           ) : (
-            <div className="glass-panel rounded-xl overflow-hidden">
-              <div className="flex items-center gap-3 px-4 py-3 border-b border-border bg-panel">
-                <Terminal className="w-4 h-4 text-accent" />
-                <span className="font-mono text-xs text-ink-muted">POST /identify</span>
+            <div className="border border-white/10 overflow-hidden">
+              <div className="flex items-center gap-3 px-6 py-4 border-b border-white/10">
+                <Terminal className="w-3.5 h-3.5 text-white/40" />
+                <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">POST /identify</span>
               </div>
-              <div className="p-4 space-y-4">
+              <div className="p-8 space-y-6">
                 <div>
-                  <label className="block text-xs font-mono text-ink-muted mb-2">email (optional)</label>
+                  <label className="block text-[10px] font-mono text-white/40 uppercase tracking-widest mb-3">Email (optional)</label>
                   <input className="input-field" placeholder='"doc@example.com"' value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono text-ink-muted mb-2">phoneNumber (optional)</label>
+                  <label className="block text-[10px] font-mono text-white/40 uppercase tracking-widest mb-3">Phone (optional)</label>
                   <input className="input-field" placeholder='"1234567890"' value={phone} onChange={(e) => setPhone(e.target.value)} />
                 </div>
-                <div className="bg-void rounded-lg p-3 font-mono text-xs text-ink-muted border border-border">
-                  <span className="text-accent">POST</span> <span className="text-ink">/identify</span><br />
-                  <span className="text-ink-muted">Content-Type: application/json</span><br /><br />
-                  <span className="text-warn">{'{'}</span><br />
-                  {email && <>&nbsp;&nbsp;"email": <span className="text-accent">"{email}"</span>,<br /></>}
-                  {phone && <>&nbsp;&nbsp;"phoneNumber": <span className="text-accent">"{phone}"</span><br /></>}
-                  <span className="text-warn">{'}'}</span>
+                <div className="bg-white/[0.02] border border-white/10 p-6 font-mono text-[11px] leading-relaxed">
+                  <p className="text-white/40 mb-4 uppercase tracking-widest">Request Payload</p>
+                  <div className="text-white/60">
+                    <span>{'{'}</span><br />
+                    {email && <>&nbsp;&nbsp;"email": <span className="text-white">"{email}"</span>,<br /></>}
+                    {phone && <>&nbsp;&nbsp;"phoneNumber": <span className="text-white">"{phone}"</span><br /></>}
+                    <span>{'}'}</span>
+                  </div>
                 </div>
-                {error && <div className="bg-danger/10 border border-danger/20 rounded-lg px-4 py-3 text-danger text-xs font-mono">{error}</div>}
-                <button onClick={handleSubmit} disabled={loading} className="btn-primary w-full flex items-center justify-center gap-2">
-                  {loading ? <span className="w-4 h-4 border-2 border-void/30 border-t-void rounded-full animate-spin" /> : <Send className="w-4 h-4" />}
-                  {loading ? 'Sending...' : 'Send Request'}
+                {error && <div className="border border-white/10 p-4 text-white/60 text-[10px] font-mono uppercase tracking-widest">{error}</div>}
+                <button onClick={handleSubmit} disabled={loading} className="btn-primary w-full flex items-center justify-center gap-3 uppercase tracking-widest text-xs font-mono">
+                  {loading ? <span className="w-3 h-3 border border-black/30 border-t-black rounded-full animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+                  {loading ? 'Sending' : 'Send Request'}
                 </button>
               </div>
             </div>
@@ -155,71 +156,66 @@ export default function IdentifyPage() {
         </div>
 
         {/* Result */}
-        <div className="col-span-3">
+        <div className="lg:col-span-7">
           {!result && !loading && (
-            <div className="h-full glass-panel rounded-xl flex flex-col items-center justify-center text-center p-12 min-h-[320px]">
-              <div className="w-16 h-16 rounded-full bg-accent/5 border border-accent/10 flex items-center justify-center mb-4 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/10 to-transparent animate-scan" />
-                <Link2 className="w-6 h-6 text-accent/40" />
+            <div className="h-full border border-white/10 border-dashed flex flex-col items-center justify-center text-center p-12 min-h-[400px]">
+              <div className="w-12 h-12 border border-white/10 flex items-center justify-center mb-6">
+                <Link2 className="w-5 h-5 text-white/20" />
               </div>
-              <p className="font-display font-semibold text-ink-muted text-sm">Awaiting identity query</p>
-              <p className="font-body text-ink-muted/60 text-xs mt-1">Results will appear here</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/20">Awaiting Query</p>
             </div>
           )}
 
           {result && (
-            <div className="space-y-4 animate-slide-up">
-              {/* Consolidated card */}
-              <div className="glass-panel rounded-xl overflow-hidden accent-glow border-accent/20">
-                <div className="flex items-center justify-between px-6 py-4 border-b border-accent/10 bg-accent/5">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-accent" />
-                    <span className="font-display font-semibold text-accent text-sm">Identity Resolved</span>
+            <div className="space-y-8 animate-slide-up">
+              <div className="border border-white">
+                <div className="flex items-center justify-between px-8 py-6 border-b border-white/10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-white" />
+                    <span className="text-xs font-mono uppercase tracking-[0.2em]">Identity Resolved</span>
                   </div>
-                  <span className="tag-primary">
-                    <Hash className="w-3 h-3" />
-                    Primary ID: {result.contact.primaryContatctId}
+                  <span className="text-[10px] font-mono text-white/40">
+                    PRIMARY ID: {result.contact.primaryContatctId}
                   </span>
                 </div>
-                <div className="p-6 grid grid-cols-2 gap-6">
-                  <div>
-                    <p className="text-xs font-mono text-ink-muted uppercase tracking-widest mb-3">
-                      <Mail className="inline w-3 h-3 mr-1" />Emails
-                    </p>
-                    <div className="space-y-1.5">
+                
+                <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-12">
+                  <div className="space-y-6">
+                    <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">Emails</p>
+                    <div className="space-y-3">
                       {result.contact.emails.map((e, i) => (
-                        <div key={e} className="flex items-center gap-2">
-                          {i === 0 && <span className="tag-primary text-[10px] px-1.5 py-0">PRIMARY</span>}
-                          {i > 0 && <span className="tag-secondary text-[10px] px-1.5 py-0">SEC</span>}
-                          <span className="font-mono text-xs text-ink truncate">{e}</span>
+                        <div key={e} className="flex items-center gap-3">
+                          <span className={`text-[9px] font-mono px-1.5 py-0.5 border ${i === 0 ? 'bg-white text-black border-white' : 'border-white/10 text-white/40'}`}>
+                            {i === 0 ? 'PRI' : 'SEC'}
+                          </span>
+                          <span className="font-mono text-xs text-white">{e}</span>
                         </div>
                       ))}
-                      {result.contact.emails.length === 0 && <span className="font-mono text-xs text-ink-muted">—</span>}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-xs font-mono text-ink-muted uppercase tracking-widest mb-3">
-                      <Phone className="inline w-3 h-3 mr-1" />Phone Numbers
-                    </p>
-                    <div className="space-y-1.5">
+                  
+                  <div className="space-y-6">
+                    <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">Phone Numbers</p>
+                    <div className="space-y-3">
                       {result.contact.phoneNumbers.map((p, i) => (
-                        <div key={p} className="flex items-center gap-2">
-                          {i === 0 && <span className="tag-primary text-[10px] px-1.5 py-0">PRIMARY</span>}
-                          {i > 0 && <span className="tag-secondary text-[10px] px-1.5 py-0">SEC</span>}
-                          <span className="font-mono text-xs text-ink">{p}</span>
+                        <div key={p} className="flex items-center gap-3">
+                          <span className={`text-[9px] font-mono px-1.5 py-0.5 border ${i === 0 ? 'bg-white text-black border-white' : 'border-white/10 text-white/40'}`}>
+                            {i === 0 ? 'PRI' : 'SEC'}
+                          </span>
+                          <span className="font-mono text-xs text-white">{p}</span>
                         </div>
                       ))}
-                      {result.contact.phoneNumbers.length === 0 && <span className="font-mono text-xs text-ink-muted">—</span>}
                     </div>
                   </div>
                 </div>
+
                 {result.contact.secondaryContactIds.length > 0 && (
-                  <div className="px-6 pb-5">
-                    <p className="text-xs font-mono text-ink-muted uppercase tracking-widest mb-2">Secondary Contact IDs</p>
+                  <div className="px-8 pb-8">
+                    <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em] mb-4">Linked Identities</p>
                     <div className="flex flex-wrap gap-2">
                       {result.contact.secondaryContactIds.map((id) => (
-                        <span key={id} className="tag-secondary">
-                          <ChevronRight className="w-3 h-3" />#{id}
+                        <span key={id} className="text-[10px] font-mono border border-white/10 px-3 py-1 text-white/60">
+                          #{id}
                         </span>
                       ))}
                     </div>
@@ -228,12 +224,12 @@ export default function IdentifyPage() {
               </div>
 
               {/* Raw JSON */}
-              <div className="glass-panel rounded-xl overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-panel">
-                  <Terminal className="w-3.5 h-3.5 text-ink-muted" />
-                  <span className="font-mono text-[11px] text-ink-muted">Response JSON</span>
+              <div className="border border-white/10">
+                <div className="flex items-center gap-3 px-6 py-4 border-b border-white/10">
+                  <Terminal className="w-3.5 h-3.5 text-white/20" />
+                  <span className="font-mono text-[10px] text-white/20 uppercase tracking-widest">RAW RESPONSE</span>
                 </div>
-                <pre className="p-4 font-mono text-xs text-ink-muted overflow-x-auto leading-relaxed">{rawJson}</pre>
+                <pre className="p-8 font-mono text-[11px] text-white/40 overflow-x-auto leading-relaxed">{rawJson}</pre>
               </div>
             </div>
           )}
