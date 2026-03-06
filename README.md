@@ -1,4 +1,4 @@
-# Bitespeed Identity Reconciliation Service
+# Identity Reconciliation Service
 
 A production-ready identity reconciliation system that links customer contact information across multiple touchpoints.
 
