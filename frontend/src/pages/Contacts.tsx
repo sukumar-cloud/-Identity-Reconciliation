@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Users, Hash, Mail, Phone, Crown, ChevronDown } from 'lucide-react';
+import { Search, Users, Mail, Phone, Crown, ChevronDown } from 'lucide-react';
 
 // Mock data for display — in production this comes from GET /contacts
 const mockContacts = [

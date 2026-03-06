@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Terminal, Send, RotateCcw, ChevronRight, Mail, Phone, Hash, Link2 } from 'lucide-react';
+import { Terminal, Send, RotateCcw, Link2 } from 'lucide-react';
 import { identifyContact } from '../api';
 import { IdentifyResponse } from '../types';
 

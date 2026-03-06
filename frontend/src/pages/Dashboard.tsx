@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Users, Link2, GitMerge, Zap, ArrowUpRight } from 'lucide-react';
+import { Users, Link2, GitMerge, Zap } from 'lucide-react';
 import { getDashboardStats, DashboardStats } from '../api';
 
 interface StatCardProps {
