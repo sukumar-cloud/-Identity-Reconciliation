@@ -88,7 +88,7 @@ export default function Dashboard() {
         <div className="bg-black">
           <StatCard 
             label="Merge Events" 
-            value={loading ? '...' : '0'} 
+            value={loading ? '...' : stats?.mergeEvents || 0} 
             sub="Recent demotions" 
             icon={<GitMerge className="w-4 h-4" />} 
           />

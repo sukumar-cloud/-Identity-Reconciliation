@@ -8,6 +8,7 @@ const client = axios.create({ baseURL: BASE_URL });
 export interface DashboardStats {
   totalContacts: number;
   linkedClusters: number;
+  mergeEvents: number;
   recentActivity: {
     email: string | null;
     phone: string | null;
