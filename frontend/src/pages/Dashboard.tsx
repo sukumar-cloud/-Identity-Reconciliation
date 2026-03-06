@@ -105,7 +105,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
         {/* Recent Activity */}
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-12">
           <div className="flex items-center justify-between mb-10">
             <h2 className="font-display font-bold text-xl text-white uppercase tracking-widest">Live Feed</h2>
             <div className="flex items-center gap-2">
@@ -141,38 +141,6 @@ export default function Dashboard() {
               )}
             </div>
           </div>
-        </div>
-
-        {/* Rules/Info */}
-        <div className="lg:col-span-4 space-y-12">
-          <section>
-            <h2 className="font-display font-bold text-xs text-white/40 uppercase tracking-[0.3em] mb-8">Logic Engine</h2>
-            <div className="space-y-8">
-              {[
-                { rule: 'Precision Match', desc: 'Cross-referencing email and phone tokens for cluster grouping.' },
-                { rule: 'Oldest Wins', desc: 'Precedence is strictly determined by initial record timestamp.' },
-                { rule: 'Recursive Merge', desc: 'Cascading updates across all linked secondary identities.' },
-              ].map((r) => (
-                <div key={r.rule} className="group">
-                  <p className="text-white text-[10px] font-mono font-bold tracking-widest uppercase mb-2 group-hover:text-white transition-colors">{r.rule}</p>
-                  <p className="text-white/30 text-[11px] font-body leading-relaxed">{r.desc}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="pt-12 border-t border-white/10">
-            <h2 className="font-display font-bold text-xs text-white/40 uppercase tracking-[0.3em] mb-8">Architecture</h2>
-            <div className="font-mono text-[10px] text-white/20 space-y-2">
-              <p>LAYER 01: EXPRESS CONTROLLER</p>
-              <p>LAYER 02: IDENTITY SERVICE</p>
-              <p>LAYER 03: PG REPOSITORY</p>
-              <div className="pt-4 flex items-center gap-2">
-                <span className="w-1 h-1 bg-white/40" />
-                <p>NEON SERVERLESS PG</p>
-              </div>
-            </div>
-          </section>
         </div>
       </div>
     </div>
