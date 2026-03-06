@@ -358,8 +358,6 @@ Response
 
 ---
 
-# ✅ Assignment Requirements Completed
-
 ✔ GitHub repository published  
 ✔ `/identify` endpoint implemented  
 ✔ API hosted online  
