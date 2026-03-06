@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import identifyRouter from "./routes/identify";
+import identifyRoutes from "./routes/identifyRoutes";
 
 dotenv.config();
 
@@ -16,7 +16,7 @@ app.get("/", (_req: express.Request, res: express.Response) => {
 });
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
-app.use("/", identifyRouter);
+app.use("/", identifyRoutes);
 
 // ─── Start ────────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
