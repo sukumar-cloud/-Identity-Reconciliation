@@ -10,7 +10,7 @@ The system links multiple purchases made with different **emails or phone number
 
 Frontend (Vercel)
 
-https://identity-reconciliation-r6hw3fnvj-sssssssssssssss-projects.vercel.app/
+(https://identity-reconciliation-chi.vercel.app/)
 
 Backend API (Render)
 
