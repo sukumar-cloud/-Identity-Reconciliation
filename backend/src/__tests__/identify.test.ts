@@ -1,15 +1,22 @@
 import request from 'supertest';
 import app from '../index';
-import { contactRepository } from '../repositories/contactRepository';
+import pool from '../db/pool';
+
+async function resetDb() {
+  await pool.query('TRUNCATE TABLE "Contact" RESTART IDENTITY CASCADE');
+}
 
 describe('POST /identify', () => {
   beforeEach(async () => {
-    // Clean up database before each test
-    // Note: In a real setup, you'd use a test database or transactions
+    await resetDb();
   });
 
   afterAll(async () => {
-    // Clean up after all tests
+    try {
+      await resetDb();
+    } finally {
+      await pool.end();
+    }
   });
 
   describe('New Contact Creation', () => {
